@@ -5,7 +5,7 @@
     </div>
     <ul>
       <li><NuxtLink to="/register">新規登録</NuxtLink></li>
-      <li><NuxtLink to="/login">ログイン</NuxtLink></li>
+      <li><NuxtLink to="/">ログイン</NuxtLink></li>
     </ul>
   </div>
 </template>
