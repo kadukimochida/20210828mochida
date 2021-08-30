@@ -4,9 +4,9 @@
     <div class="content">
       <div class="acount">
         <h2>新規登録</h2>
-        <input v-model="userName" type="text" placeholder="ユーザーネーム" required />
-        <input v-model="email" type="email" placeholder="メールアドレス"  required />
-        <input v-model="password" type="password" placeholder="パスワード"  required />
+        <input v-model="userName" name="name" type="text" placeholder="ユーザーネーム" required />
+        <input v-model="email" name="email" type="email" placeholder="メールアドレス"  required />
+        <input v-model="password" name="password" type="password" placeholder="パスワード"  required />
         <button @click="register">新規登録</button>
       </div>
     </div>
@@ -26,6 +26,12 @@ export default {
   },
   methods: {
     register() {
+      const sendData = {
+        name:this.userName,
+        email:this.email,
+        password:this.password,
+      };
+      this.$axios.post("http://127.0.0.1:8000/api/share/",sendData);
       if (!this.userName || !this.email || !this.password) {
         return
       }
@@ -54,7 +60,7 @@ export default {
           default:
             alert('エラーが起きました')
         }
-      })
+      });
     },
   },
 }

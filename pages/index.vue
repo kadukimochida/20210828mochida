@@ -4,8 +4,8 @@
     <div class="content">
       <div class="acount">
         <h2>ログイン</h2>
-        <input v-model="email" type="email" placeholder="メールアドレス"  required />
-        <input v-model="password" type="password" placeholder="パスワード"  required />
+        <input v-model="email" name="email" type="email" placeholder="メールアドレス"  required />
+        <input v-model="password" name="password" type="password" placeholder="パスワード"  required />
         <button @click="login">ログイン</button>
       </div>
     </div>
