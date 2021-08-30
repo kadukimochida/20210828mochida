@@ -6,7 +6,7 @@
         <h2>ログイン</h2>
         <input v-model="email" name="email" type="email" placeholder="メールアドレス"  required />
         <input v-model="password" name="password" type="password" placeholder="パスワード"  required />
-        <button @click="login">ログイン</button>
+        <button @click="login(userId)">ログイン</button>
       </div>
     </div>
   </div>
@@ -20,10 +20,11 @@ export default {
     return {
       email: null,
       password: null,
+      userId:null,
     }
   },
   methods: {
-    login() {
+    login(userId) {
       if (!this.email || !this.password) {
         alert('メールアドレスまたはパスワードが入力されていません')
         return
@@ -53,8 +54,12 @@ export default {
               break
         }
       })
-    }
-  }
+      const data = this.$axios.get("http://127.0.0.1:8000/api/share");
+      this.userId = data.data.id
+      window.localStorage.setItem("userId",userId)
+      this.$router.push("/home")
+    },
+  },
 }
 </script scoped>
 <style>
