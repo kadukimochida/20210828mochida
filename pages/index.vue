@@ -20,11 +20,11 @@ export default {
     return {
       email: null,
       password: null,
-      userId:null,
+      userList:[],
     }
   },
   methods: {
-    login(userId) {
+    login() {
       if (!this.email || !this.password) {
         alert('メールアドレスまたはパスワードが入力されていません')
         return
@@ -54,10 +54,6 @@ export default {
               break
         }
       })
-      const data = this.$axios.get("http://127.0.0.1:8000/api/share");
-      this.userId = data.data.id
-      window.localStorage.setItem("userId",userId)
-      this.$router.push("/home")
     },
   },
 }

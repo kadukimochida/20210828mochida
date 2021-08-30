@@ -5,6 +5,7 @@
     <button @click="logout">ログアウト</button>
     <input v-model="post" name="post" type="text" required />
     <button @click= "insertPost">シェアする</button>
+    <p>{{this.$route.query.userId}}</p>
   </div>
 </template>
 
@@ -19,12 +20,14 @@ export default {
       userId: '',
       email: null,
       password: null,
+      userList:[],
     }
   },
-  mounted() {
-    this.userId = window.localStorage.getItem("userId")
-  },
   methods: {
+    async getData(){
+      const resData = await this.$axios.get("http://127.0.0.1:8000/api/share");
+      this.userList = resData.data.data;
+    },
     logout() {
       firebase
       .auth()
@@ -33,17 +36,18 @@ export default {
         this.$router.replace('/')
       })
     },
-    insertPost() {
+    /*insertPost() {
       const sendData = {
         post:this.post,
         user_id:this.userId,
       }
-    }
+    }*/
   },
   created() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.name = user.displayName
+        this.email = user.email
         console.log(user);
       }
     })
