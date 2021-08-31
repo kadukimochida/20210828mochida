@@ -22,17 +22,11 @@ export default {
       userName: null,
       email: null,
       password: null,
+      uid:null,
     }
   },
   methods: {
     register() {
-      const sendData = {
-        name:this.userName,
-        email:this.email,
-        password:this.password,
-      };
-      this.$axios.post("http://127.0.0.1:8000/api/share/",sendData);
-      this.$axios.get("http://127.0.0.1:8000/api/share");
       if (!this.userName || !this.email || !this.password) {
         return
       }
@@ -46,14 +40,19 @@ export default {
         data.user.updateProfile({
           displayName:this.userName
         })
-        const user = firebase.auth().currentUser;
-        if(user !== null) {
-          const uid = user.uid;
-          const get = this.$axios.get("http://127.0.0.1:8000/share");
-          const userId = get.data.data.id;
-          this.$axios.put("http://127.0.0.1:8000/share/"+userId,uid);
-        }
+        console.log(data.user);
+        this.uid = data.user.uid
+        const sendData = {
+        name:this.userName,
+        email:this.email,
+        password:this.password,
+        uid:this.uid,
+      };
+      console.log(this.uid);
+      this.$axios.post("http://127.0.0.1:8000/api/share/",sendData);
+      /*this.$axios.get("http://127.0.0.1:8000/api/share");*/
       })
+
       .catch((error) => {
         switch (error.code) {
           case 'auth/invalid-email':
