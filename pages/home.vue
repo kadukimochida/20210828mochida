@@ -31,9 +31,9 @@ export default {
     return {
       name:null,
       content: null,
-      uid: null,
       email: null,
       password: null,
+      uid:null,
       userList:[],
       postData:[],
     }
@@ -42,6 +42,7 @@ export default {
     async getData(){
       const resData = await this.$axios.get("http://127.0.0.1:8000/api/share/");
       this.userList = resData.data.data;
+      console.log(resData);
     },
     async getPost(){
       const postContent =  await this.$axios.get("http://127.0.0.1:8000/api/post");

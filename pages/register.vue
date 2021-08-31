@@ -46,8 +46,8 @@ export default {
         data.user.updateProfile({
           displayName:this.userName
         })
-        const uid = {user_uid:data.user.uid};
-        this.$axios.put("http://127.0.0.1:8000/api/share"+id,uid);
+        /*const uid = {user_uid:data.user.uid};
+        this.$axios.put("http://127.0.0.1:8000/api/share"+id,uid);*/
       })
       .catch((error) => {
         switch (error.code) {
