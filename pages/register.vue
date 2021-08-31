@@ -46,8 +46,13 @@ export default {
         data.user.updateProfile({
           displayName:this.userName
         })
-        /*const uid = {user_uid:data.user.uid};
-        this.$axios.put("http://127.0.0.1:8000/api/share"+id,uid);*/
+        const user = firebase.auth().currentUser;
+        if(user !== null) {
+          const uid = user.uid;
+          const get = this.$axios.get("http://127.0.0.1:8000/share");
+          const userId = get.data.data.id;
+          this.$axios.put("http://127.0.0.1:8000/share/"+userId,uid);
+        }
       })
       .catch((error) => {
         switch (error.code) {
