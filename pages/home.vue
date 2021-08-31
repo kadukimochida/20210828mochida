@@ -5,6 +5,7 @@
     <button @click="logout">ログアウト</button>
     <input v-model="content" name="post" type="text" required />
     <button @click= "insertPost">シェアする</button>
+    <p>{{postsData}}</p>
   </div>
 </template>
 
@@ -20,13 +21,17 @@ export default {
       email: null,
       password: null,
       userList:[],
+      postData:[],
     }
   },
   methods: {
     async getData(){
       const resData = await this.$axios.get("http://127.0.0.1:8000/api/share/");
       this.userList = resData.data.data;
-      this.userId = userList.id;
+    },
+    async getPost(){
+      const postContent =  await this.$axios.get("http://127.0.0.1:8000/api/share/post/");
+      this.postData = postContent.data.data
     },
     async insertPost(){
       const sendData = {
@@ -35,6 +40,7 @@ export default {
       }
       await this.$axios.post("http://127.0.0.1:8000/api/share/post",sendData);
       this.getData();
+      this.content = null
     },
     logout() {
       firebase
@@ -54,6 +60,8 @@ export default {
         console.log(user);
       }
     })
+    this.getData();
+    this.getPost();
   },
 }
 </script>
