@@ -6,7 +6,7 @@
         <h2>ログイン</h2>
         <input v-model="email" name="email" type="email" placeholder="メールアドレス"  required />
         <input v-model="password" name="password" type="password" placeholder="パスワード"  required />
-        <button @click="login(userId)">ログイン</button>
+        <button @click="login">ログイン</button>
       </div>
     </div>
   </div>
@@ -57,8 +57,8 @@ export default {
     },
   },
 }
-</script scoped>
-<style>
+</script>
+<style scoped>
 html, body, #__nuxt, #__layout, #__layout > div {
   height: 100vh;
   width: 100%;

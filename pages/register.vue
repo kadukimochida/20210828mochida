@@ -32,6 +32,7 @@ export default {
         password:this.password,
       };
       this.$axios.post("http://127.0.0.1:8000/api/share/",sendData);
+      this.$axios.get("http://127.0.0.1:8000/api/share");
       if (!this.userName || !this.email || !this.password) {
         return
       }
@@ -45,6 +46,8 @@ export default {
         data.user.updateProfile({
           displayName:this.userName
         })
+        const uid = {user_uid:data.user.uid};
+        this.$axios.put("http://127.0.0.1:8000/api/share"+id,uid);
       })
       .catch((error) => {
         switch (error.code) {
