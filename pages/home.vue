@@ -18,7 +18,13 @@
     </div>
     <div class="container">
       <h2>ホーム</h2>
-      <p v-for="post in postData" :key="post.id">{{post.content}}</p>
+      <div class="post" v-for="post in postData" :key="post.id">
+        <p>{{post.name}}</p>
+        <button @click="good"><img src="../img/heart.png"></button>
+        <button @click="postDelete(post.id)"><img src="../img/cross.png"></button>
+        <NuxtLink to="/comment"><img src="../img/detail.png"></NuxtLink>
+        <p>{{post.content}}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -47,15 +53,22 @@ export default {
     async getPost(){
       const postContent =  await this.$axios.get("http://127.0.0.1:8000/api/post");
       this.postData = postContent.data.data
+      console.log(this.postData);
     },
     async insertPost(){
       const sendData = {
         content:this.content,
-        user_id:this.uid
+        user_uid:this.uid,
+        name:this.name,
       }
       await this.$axios.post("http://127.0.0.1:8000/api/post",sendData);
-      this.getPost();
+      const postContent =  await this.$axios.get("http://127.0.0.1:8000/api/post");
+      this.postData = [],
+      this.postData.push(postContent);
       this.content = null
+    },
+    async postDelete(id) {
+      await this.$axios.delete("http://127.0.0.1:8000/api/post/"+id,);
     },
     logout() {
       firebase
@@ -141,7 +154,7 @@ textarea {
   outline: none;
 }
 
-button {
+.home-menu button {
   display: block;
   background-color: blueviolet;
   color: white;
@@ -151,5 +164,45 @@ button {
   height: 30px;
   font-size: 10px;
   margin: 0 0 0 60%;
+}
+
+.post,
+.container h2 {
+  border-left: solid 1px white;
+  border-bottom: solid 1px white;
+}
+
+.container h2 {
+  margin: 0;
+  padding: 10px;
+}
+
+.post button {
+  height: 25px;
+  width: 40px;
+  background-color: #19193f;
+  border: none;
+}
+
+.post button img {
+  width: 100%;
+  height: 100%;
+}
+
+.post a {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+}
+
+.post a img {
+  width: 100%;
+  height: 100%;
+}
+
+.post p:first-of-type {
+  font-weight: bold;
+  display: inline-block;
+
 }
 </style>

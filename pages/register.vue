@@ -17,7 +17,7 @@
 import firebase from '~/plugins/firebase'
 
 export default {
-  date() {
+  data() {
     return {
       userName: null,
       email: null,
