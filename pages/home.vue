@@ -62,9 +62,8 @@ export default {
         name:this.name,
       }
       await this.$axios.post("http://127.0.0.1:8000/api/post",sendData);
-      const postContent =  await this.$axios.get("http://127.0.0.1:8000/api/post");
-      this.postData = [],
-      this.postData.push(postContent);
+      this.getPost();
+      this.postData = JSON.parse(JSON.stringify(this.postData));
       this.content = null
     },
     async postDelete(id) {
