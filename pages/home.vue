@@ -20,9 +20,9 @@
       <h2>ホーム</h2>
       <div class="post" v-for="post in postData" :key="post.id">
         <p>{{post.name}}</p>
-        <button @click="good"><img src="../img/heart.png"></button>
+        <button><img src="../img/heart.png"></button>
         <button @click="postDelete(post.id)"><img src="../img/cross.png"></button>
-        <NuxtLink to="/comment"><img src="../img/detail.png"></NuxtLink>
+        <NuxtLink :to="{path:`/comment/${post.id}`}"><img src="../img/detail.png"></NuxtLink>
         <p>{{post.content}}</p>
       </div>
     </div>
@@ -63,11 +63,11 @@ export default {
       }
       await this.$axios.post("http://127.0.0.1:8000/api/post",sendData);
       this.getPost();
-      this.postData = JSON.parse(JSON.stringify(this.postData));
       this.content = null
     },
     async postDelete(id) {
       await this.$axios.delete("http://127.0.0.1:8000/api/post/"+id,);
+      this.getPost();
     },
     logout() {
       firebase
