@@ -1,7 +1,16 @@
 <template>
-<div>
-  <p>{{postData.id = postId}}</p>
-</div>
+<div class="home">
+    <SideMenu></SideMenu>
+    <div class="container">
+      <h2>コメント</h2>
+      <div class="post" v-for="post in postData" :key="post.id">
+        <p>{{post.name}}</p>
+        <button><img src="../../img/heart.png"></button>
+        <button @click="postDelete(post.id)"><img src="../../img/cross.png"></button>
+        <p>{{post.content}}</p>
+      </div>
+    </div>
+  </div>
 </template>
 
 
@@ -17,7 +26,7 @@ export default {
       uid:null,
       userList:[],
       postData:[],
-      postId:this.$route.params.id,
+      postId: this.$route.params.id,
       post:[],
     }
   },
@@ -27,10 +36,13 @@ export default {
       this.userList = resData.data.data;
       console.log(resData);
     },
+
     async getPost(){
-      const postContent =  await this.$axios.get("http://127.0.0.1:8000/api/post");
-      this.postData = postContent.data.data
+      const postContent = await this.$axios.get("http://127.0.0.1:8000/api/post/"+this.postId);
+      this.postData = postContent.data.data;
+      console.log(this.postData);
     },
+
     async insertPost(){
       const sendData = {
         content:this.content,
@@ -55,6 +67,8 @@ export default {
     },
   },
   created() {
+    this.getPost();
+    this.getData();
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.name = user.displayName
@@ -63,8 +77,75 @@ export default {
         console.log(user);
       }
     })
-    this.getData();
-    this.getPost();
   },
 }
 </script>
+
+<style scoped>
+html, body, #__nuxt, #__layout, #__layout > div {
+  height: 100vh;
+  width: 100%;
+  background-color: #19193f;
+}
+
+.home {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+
+
+.container {
+  height: 100%;
+  width: 80%;
+}
+
+
+a {
+  text-decoration: none;
+}
+
+p,
+h2,
+a {
+  color: white;
+}
+
+.post {
+  padding: 20px;
+}
+
+.post,
+.container h2 {
+  border-left: solid 1px white;
+  border-bottom: solid 1px white;
+}
+
+.container h2 {
+  margin: 0;
+  padding: 10px;
+}
+
+.post button {
+  height: 25px;
+  width: 40px;
+  background-color: #19193f;
+  border: none;
+}
+
+.post button img {
+  width: 100%;
+  height: 100%;
+}
+
+.post p {
+  margin: 0;
+}
+
+.post p:first-of-type {
+  font-weight: bold;
+  display: inline-block;
+
+}
+</style>

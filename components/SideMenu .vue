@@ -1,16 +1,19 @@
 <template>
-  <div class="home">
-    <SideMenu></SideMenu>
-    <div class="container">
-      <h2>ホーム</h2>
-      <div class="post" v-for="post in postData" :key="post.id">
-        <p>{{post.name}}</p>
-        <button><img src="../img/heart.png"></button>
-        <button @click="postDelete(post.id)"><img src="../img/cross.png"></button>
-        <NuxtLink :to="{path:`/comment/${post.id}`}"><img src="../img/detail.png"></NuxtLink>
-        <p>{{post.content}}</p>
+  <div class="home-menu">
+      <div class="home-img">
+        <img src="../img/logo.png">
       </div>
-    </div>
+      <div class="menu-link">
+        <img src="../img/home.png">
+        <NuxtLink to="/home">ホーム</NuxtLink>
+      </div>
+      <div class="menu-link">
+        <img src="../img/logout.png">
+        <NuxtLink to="/" @click="logout">ログアウト</NuxtLink>
+      </div>
+      <p>シェア</p>
+      <textarea v-model="content" name="post" cols="10" rows="5" required />
+      <button @click= "insertPost">シェアする</button>
   </div>
 </template>
 
@@ -86,74 +89,64 @@ html, body, #__nuxt, #__layout, #__layout > div {
   background-color: #19193f;
 }
 
-.home {
-  display: flex;
+
+.home-menu {
   height: 100%;
-  width: 100%;
+  width: 20%;
+  padding: 10px;
 }
-
-
 
 .container {
   height: 100%;
   width: 80%;
 }
 
+.home-img {
+  width: 30%;
+  height: 30px;
+}
+
+.home-img img {
+  width: 100%;
+  height: 100%;
+}
+
+
+.menu-link img {
+  width: 30px;
+  height: 30px;
+}
 
 a {
   text-decoration: none;
 }
 
 p,
-h2,
 a {
   color: white;
 }
 
-.post {
-  padding: 20px;
-}
-
-.post,
-.container h2 {
-  border-left: solid 1px white;
-  border-bottom: solid 1px white;
-}
-
-.container h2 {
-  margin: 0;
-  padding: 10px;
-}
-
-.post button {
-  height: 25px;
-  width: 40px;
+textarea {
+  width: 90%;
+  height: 100px;
+  border: solid 1px white;
   background-color: #19193f;
+  color: white;
+  border-radius: 5px;
+  outline: none;
+}
+
+.home-menu button {
+  display: block;
+  background-color: blueviolet;
+  color: white;
+  border-radius: 20px;
   border: none;
-}
-
-.post button img {
-  width: 100%;
-  height: 100%;
-}
-
-.post a {
-  display: inline-block;
-  width: 30px;
+  width: 30%;
   height: 30px;
+  font-size: 10px;
+  margin: 0 0 0 60%;
 }
 
-.post a img {
-  width: 100%;
-  height: 100%;
-}
 
-.post p {
-  margin: 0;
-}
-
-.post p:first-of-type {
-  font-weight: bold;
-  display: inline-block;
-}
 </style>
