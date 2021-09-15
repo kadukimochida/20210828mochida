@@ -120,12 +120,13 @@ export default {
 <style scoped>
 html, body, #__nuxt, #__layout, #__layout > div {
   width: 100%;
-  padding-bottom: 500px;
+  height: 100vh;
   background-color: #141E32;
 }
 
 .home {
   display: flex;
+  height: 100%;
   width: 100%;
 }
 
