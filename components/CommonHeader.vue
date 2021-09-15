@@ -14,14 +14,15 @@
 
 .header {
   width: 100%;
-  height: 60px;
-  background-color: #19193f;
+  height: 100px;
+  background-color: #141E32;
   display: flex;
   justify-content: space-between;
 }
 .header-img {
-  width: 200px;
-  height: 100%;
+  width: 150px;
+  height: 50%;
+  margin: 20px 20px;
 }
 img {
   width: 100%;
@@ -33,6 +34,8 @@ ul {
   width: 200px;
 }
 li {
+  display: flex;
+  align-items: center;
   list-style: none;
   width: 50%;
 }

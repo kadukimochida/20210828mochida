@@ -1,11 +1,27 @@
 <template>
   <div class="home">
-    <SideMenu></SideMenu>
+    <div class="home-menu">
+      <div class="home-img">
+        <img src="../img/logo.png">
+      </div>
+      <div class="menu-link">
+        <img src="../img/home.png">
+        <NuxtLink to="/home">ホーム</NuxtLink>
+      </div>
+      <div class="menu-link">
+        <img src="../img/logout.png">
+        <NuxtLink to="/" @click="logout">ログアウト</NuxtLink>
+      </div>
+      <p>シェア</p>
+      <textarea v-model="content" name="post" cols="10" rows="5" required />
+      <button @click= "insertPost">シェアする</button>
+    </div>
     <div class="container">
       <h2>ホーム</h2>
       <div class="post" v-for="post in postData" :key="post.id">
         <p>{{post.name}}</p>
-        <button><img src="../img/heart.png"></button>
+        <button @click="goodBtn(post.good,post.id)"><img src="../img/heart.png"></button>
+        <p class="good">{{post.good}}</p>
         <button @click="postDelete(post.id)"><img src="../img/cross.png"></button>
         <NuxtLink :to="{path:`/comment/${post.id}`}"><img src="../img/detail.png"></NuxtLink>
         <p>{{post.content}}</p>
@@ -23,10 +39,10 @@ export default {
       name:null,
       content: null,
       email: null,
-      password: null,
       uid:null,
       userList:[],
       postData:[],
+      good: false,
     }
   },
   methods: {
@@ -62,6 +78,28 @@ export default {
         this.$router.replace('/')
       })
     },
+    async goodBtn(postGood,id) {
+      console.log(this.good);
+      if (this.good == false) {
+        this.good = true
+        const send = {
+          good:postGood+1,
+        };
+        await this.$axios.put("http://127.0.0.1:8000/api/post/"+id,send)
+        .then(()=> {
+          this.getPost();
+        });
+      } else {
+        this.good = false
+        const send = {
+          good:postGood-1,
+        };
+        await this.$axios.put("http://127.0.0.1:8000/api/post/"+id,send)
+        .then(()=> {
+          this.getPost();
+        });
+      }
+    },
   },
   created() {
     firebase.auth().onAuthStateChanged((user) => {
@@ -81,15 +119,82 @@ export default {
 
 <style scoped>
 html, body, #__nuxt, #__layout, #__layout > div {
-  height: 100vh;
   width: 100%;
-  background-color: #19193f;
+  padding-bottom: 500px;
+  background-color: #141E32;
 }
 
 .home {
   display: flex;
-  height: 100%;
   width: 100%;
+}
+
+.home-menu {
+  width: 20%;
+  padding: 10px;
+}
+
+.container {
+  height: 100%;
+  width: 80%;
+}
+
+.home-img {
+  width: 40%;
+  height: 30px;
+  margin: 10px;
+}
+
+.home-img img {
+  width: 100%;
+  height: 100%;
+}
+
+.menu-link {
+  padding: 0 10px;
+  margin: 10px 0;
+}
+
+.menu-link a {
+  display: inline-block;
+  margin-left: 5px;
+}
+
+.menu-link img {
+  width: 20px;
+  height: 20px;
+}
+
+a {
+  text-decoration: none;
+}
+
+p,
+a {
+  color: white;
+}
+
+textarea {
+  width: 90%;
+  height: 100px;
+  border: solid 1px white;
+  background-color: #141E32;
+  color: white;
+  border-radius: 5px;
+  outline: none;
+  margin: 10px 0;
+}
+
+.home-menu button {
+  display: block;
+  background-color: blueviolet;
+  color: white;
+  border-radius: 20px;
+  border: none;
+  width: 30%;
+  height: 30px;
+  font-size: 10px;
+  margin: 0 0 0 60%;
 }
 
 
@@ -112,6 +217,7 @@ a {
 
 .post {
   padding: 20px;
+  background-color: #141E32;
 }
 
 .post,
@@ -128,7 +234,7 @@ a {
 .post button {
   height: 25px;
   width: 40px;
-  background-color: #19193f;
+  background-color: #141E32;
   border: none;
 }
 
@@ -149,11 +255,15 @@ a {
 }
 
 .post p {
-  margin: 0;
+  margin: 10px;
 }
 
 .post p:first-of-type {
   font-weight: bold;
+  display: inline-block;
+}
+
+.good {
   display: inline-block;
 }
 </style>

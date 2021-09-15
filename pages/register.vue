@@ -50,7 +50,6 @@ export default {
       };
       console.log(this.uid);
       this.$axios.post("http://127.0.0.1:8000/api/share/",sendData);
-      /*this.$axios.get("http://127.0.0.1:8000/api/share");*/
       })
 
       .catch((error) => {
@@ -86,13 +85,14 @@ html, body, #__nuxt, #__layout, #__layout > div {
 .content {
   height: 100%;
   padding-top: 10%;
-  background-color: #19193F;
+  background-color: #141E32;
 }
 
 .acount {
   width: 30%;
-  height: 300px;
+  height: 250px;
   margin: 0 35%;
+  padding-top: 20px;
   background-color: white;
   border-radius: 5px;
 }

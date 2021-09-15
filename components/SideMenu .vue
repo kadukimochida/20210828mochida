@@ -17,81 +17,15 @@
   </div>
 </template>
 
-<script>
-import firebase from '~/plugins/firebase'
 
-export default {
-  data(){
-    return {
-      name:null,
-      content: null,
-      email: null,
-      password: null,
-      uid:null,
-      userList:[],
-      postData:[],
-    }
-  },
-  methods: {
-    async getData(){
-      const resData = await this.$axios.get("http://127.0.0.1:8000/api/share/");
-      this.userList = resData.data.data;
-      console.log(resData);
-    },
-    async getPost(){
-      const postContent =  await this.$axios.get("http://127.0.0.1:8000/api/post");
-      this.postData = postContent.data.data
-      console.log(this.postData);
-    },
-    async insertPost(){
-      const sendData = {
-        content:this.content,
-        user_uid:this.uid,
-        name:this.name,
-      }
-      await this.$axios.post("http://127.0.0.1:8000/api/post",sendData);
-      this.getPost();
-      this.content = null
-    },
-    async postDelete(id) {
-      await this.$axios.delete("http://127.0.0.1:8000/api/post/"+id,);
-      this.getPost();
-    },
-    logout() {
-      firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        this.$router.replace('/')
-      })
-    },
-  },
-  created() {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.name = user.displayName
-        this.email = user.email
-        this.uid = user.uid
-        console.log(user);
-      }
-    }),
-
-    this.getData();
-    this.getPost();
-  },
-}
-</script>
 
 <style scoped>
 html, body, #__nuxt, #__layout, #__layout > div {
-  height: 100vh;
   width: 100%;
-  background-color: #19193f;
 }
 
 
 .home-menu {
-  height: 100%;
   width: 20%;
   padding: 10px;
 }
@@ -102,8 +36,9 @@ html, body, #__nuxt, #__layout, #__layout > div {
 }
 
 .home-img {
-  width: 30%;
+  width: 40%;
   height: 30px;
+  margin: 10px;
 }
 
 .home-img img {
@@ -111,10 +46,19 @@ html, body, #__nuxt, #__layout, #__layout > div {
   height: 100%;
 }
 
+.menu-link {
+  padding: 0 10px;
+  margin: 10px 0;
+}
+
+.menu-link a {
+  display: inline-block;
+  margin-left: 5px;
+}
 
 .menu-link img {
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
 }
 
 a {
@@ -130,10 +74,11 @@ textarea {
   width: 90%;
   height: 100px;
   border: solid 1px white;
-  background-color: #19193f;
+  background-color: #141E32;
   color: white;
   border-radius: 5px;
   outline: none;
+  margin: 10px 0;
 }
 
 .home-menu button {

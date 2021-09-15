@@ -71,13 +71,14 @@ html, body, #__nuxt, #__layout, #__layout > div {
 .content {
   height: 100%;
   padding-top: 10%;
-  background-color: #19193F;
+  background-color: #141E32;
 }
 
 .acount {
   width: 30%;
-  height: 250px;
+  height: 200px;
   margin: 0 35%;
+  padding-top: 20px;
   background-color: white;
   border-radius: 5px;
 }
