@@ -14,6 +14,7 @@
       <p>シェア</p>
       <textarea v-model="content" name="post" cols="10" rows="5" required />
       <button @click= "insertPost">シェアする</button>
+      <p>持田香津季</p>
   </div>
 </template>
 
